@@ -2,6 +2,7 @@ drop table MaterialTable;
 drop table PressTable;
 drop table WeldTable;
 drop table PaintTable;
+drop table LoginTable;
 --------------------------------------------------------------------------
 CREATE TABLE MaterialTable (
     id number PRIMARY KEY,
@@ -62,14 +63,23 @@ INSERT INTO PaintTable VALUES (6, 2, '검정', 100);
 INSERT INTO PaintTable VALUES (7, 3, '회색', 100);
 INSERT INTO PaintTable VALUES (8, 3, '흰색', 100);
 INSERT INTO PaintTable VALUES (9, 3, '검정', 100);
+----------------------------------------------------------------------
+CREATE TABLE LoginTable (
+    id number PRIMARY KEY,
+    User_name varchar2(10) not null,
+    User_id varchar2(20) not null,
+    User_pwd varchar2(20) not null,
+    admin NUMBER(1)
+);
+INSERT INTO LoginTable VALUES (1, '관리자', 'admin', 'admin', 1);
+INSERT INTO LoginTable VALUES (2, '아무개', 'user', 'user', 0);
 
 commit;
 ----------------------------------------------------------------------
-/*
+
 select * from MaterialTable;
 select * from PressTable;
 select * from WeldTable;
 select * from PaintTable;
+select * from LoginTable;
 
-
-*/
