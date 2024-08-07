@@ -1,0 +1,21 @@
+CREATE TABLE cars (
+    vehicle_type VARCHAR2(50),
+    color VARCHAR2(30),
+    engine_type VARCHAR2(30),
+    options VARCHAR2(100)
+);
+
+select * from cars;
+
+INSERT INTO cars VALUES('K3', '흰색', '1.6 가솔린', 'Leather seats, Sunroof');
+INSERT INTO cars VALUES('K3', '검정색', '2.0 LPI', 'Navigation system, Backup camera');
+INSERT INTO cars VALUES('K3', '빨간색', '1.6 가솔린', 'Heated seats, Premium audio system');
+INSERT INTO cars VALUES('K5', '흰색', '2.0 LPI', 'Leather seats, Navigation system');
+INSERT INTO cars VALUES('K5', '검정색', '1.6 가솔린', 'Sunroof, Autopilot');
+INSERT INTO cars VALUES('K5', '빨간색', '2.0 LPI', 'Backup camera, Heated seats');
+INSERT INTO cars VALUES('K8', '흰색', '1.6 가솔린', 'Premium audio system, Navigation system');
+INSERT INTO cars VALUES('K8', '검정색', '2.0 LPI', 'Leather seats, Heated seats');
+INSERT INTO cars VALUES('K8', '빨간색', '1.6 가솔린', 'Autopilot, Sunroof');
+
+select * from cars;
+    
