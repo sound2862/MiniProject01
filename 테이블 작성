@@ -15,4 +15,4 @@ INSERT INTO cars  VALUES('K5', '검정색', '1.6 가솔린', '노블레스');
 INSERT INTO cars  VALUES('K5', '빨간색', '2.0 LPI', '시그니처');
 INSERT INTO cars  VALUES('K8', '흰색', '1.6 가솔린', '스탠다드');
 INSERT INTO cars  VALUES('K8', '검정색', '2.0 LPI', '노블레스');
-INSERT INTO cars  VALUES('K8', '빨간색', '1.6 가솔린', '시그니처');ㅍ
+INSERT INTO cars  VALUES('K8', '빨간색', '1.6 가솔린', '시그니처');
