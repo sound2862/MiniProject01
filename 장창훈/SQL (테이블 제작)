@@ -56,26 +56,16 @@ INSERT INTO PaintTable VALUES (7, 3, '빨강', 100);
 INSERT INTO PaintTable VALUES (8, 3, '흰색', 100);
 INSERT INTO PaintTable VALUES (9, 3, '검정', 100);
 
+commit;
 ----------------------------------------------------------------------
-
+/*
 select * from MaterialTable;
 select * from PressTable;
 select * from WeldTable;
 select * from PaintTable;
 
-
-
-
-
-//아이디 시퀀스로 넣는편이 좋을수도 있음
-//색깔은 굳이? 시그니처 노블레스 등의 차별점은?
-//완성품 재고 db는 추후에 제작
-//로그인 기능은 만들것인가? 만들지 않는다면 시퀀스를 이용 한 자동 번호부여로 할 예정
-
-//프레스공정 : 원재료 테이블(철판) + 부품 종류(하드코딩) -> K3문,프레임 ,K5문,프레임 ,K8문,프레임 (총 6개 요소)(프레스 테이블)
-//용접 공정 : 프레스 테이블 + 차체(하드코딩) -> K3, K5, K8 차체 (총 3개요소)(용접 테이블)
-//도장 공정 : 용접 테이블 + 색깔(하드코딩) -> K3(빨강,흰색,검정), K5(빨흰검), K8(빨흰검) (총 9개 요소)(도장 테이블)
-//조립 공정 : 도장 테이블 + 악세사리(하드코딩? 악세 테이블?) -> 여러 악세가 달린 차량 (차량종류 * 악세종류? 몇개나올지 모르겠네)(조립 테이블)
-//검사 공정 : 앞선 공정에서 오류가 발생한것을 체크해서 (앞선 코드에서 ErrorChecked 변수에 값 저장) 시작부분으로 리턴
-
-//원재료 테이블(각종 악세사리, 철판이 들어있다)은 공급 버튼으로 부족분 채울 예정. (해당 재료가 부족하면 알람) 
+drop table MaterialTable;
+drop table PressTable;
+drop table WeldTable;
+drop table PaintTable;
+*/
