@@ -14,8 +14,15 @@ INSERT INTO CarParts VALUES (2, 'B엔진', 1400.00, 8, '엔진');
 INSERT INTO CarParts VALUES (3, '스탠다드', 200.00, 40, '타입');
 INSERT INTO CarParts VALUES (4, '노블레스', 250.00, 50, '타입');
 INSERT INTO CarParts VALUES (5, '시그니처', 300.00, 40, '타입');
-INSERT INTO CarParts VALUES (6, 'A차체', 3000.00, 5, '차체');
-INSERT INTO CarParts VALUES (7, 'B차체', 3200.00, 3, '차체');
-INSERT INTO CarParts VALUES (8, 'A컬러', 100.00, 100, '컬러');
-INSERT INTO CarParts VALUES (9, 'B컬러', 150.00, 80, '컬러');
+INSERT INTO CarParts VALUES (6, 'K3', 3000.00, 5, '차체');
+INSERT INTO CarParts VALUES (7, 'K5', 3200.00, 6, '차체');
+INSERT INTO CarParts VALUES (8, 'K8', 3200.00, 5, '차체');
+INSERT INTO CarParts VALUES (9, '흰색', 100.00, 100, '컬러');
+INSERT INTO CarParts VALUES (10, '검정색', 100.00, 80, '컬러');
+INSERT INTO CarParts VALUES (11, '빨간색', 150.00, 100, '컬러');
+
+//아이디 시퀀스로 넣는편이 좋을수도 있음
+//색깔은 굳이? 시그니처 노블레스 등의 차별점은?
+//완성품 재고 db는 추후에 제작
+
 
