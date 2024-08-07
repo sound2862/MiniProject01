@@ -20,9 +20,15 @@ namespace SFMiniProject
             dataGridView2.DataSource = Util.GetTableData("PressTable");
             dataGridView3.DataSource = Util.GetTableData("WeldTable");
             dataGridView4.DataSource = Util.GetTableData("PaintTable");
+            dataGridView5.DataSource = Util.GetTableData("LoginTable");
 
             string a = Util.GetCellValue(dataGridView1, 1, 2);
             label1.Text = a;
+        }
+
+        private void dataGridView6_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 
