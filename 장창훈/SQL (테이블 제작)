@@ -1,3 +1,8 @@
+drop table MaterialTable;
+drop table PressTable;
+drop table WeldTable;
+drop table PaintTable;
+--------------------------------------------------------------------------
 CREATE TABLE MaterialTable (
     id number PRIMARY KEY,
     material_name VARCHAR(50) NOT NULL,
@@ -66,8 +71,5 @@ select * from PressTable;
 select * from WeldTable;
 select * from PaintTable;
 
-drop table MaterialTable;
-drop table PressTable;
-drop table WeldTable;
-drop table PaintTable;
+
 */
