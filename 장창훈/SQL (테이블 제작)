@@ -9,8 +9,8 @@ CREATE TABLE CarParts (
 drop table carparts;
 select * from carparts;
 
-INSERT INTO CarParts VALUES (1, 'A엔진', 1200.00, 10, '엔진');
-INSERT INTO CarParts VALUES (2, 'B엔진', 1400.00, 8, '엔진');
+INSERT INTO CarParts VALUES (1, '1.6 가솔린', 1200.00, 10, '엔진');
+INSERT INTO CarParts VALUES (2, '2.0 LPI', 1400.00, 8, '엔진');
 INSERT INTO CarParts VALUES (3, '스탠다드', 200.00, 40, '타입');
 INSERT INTO CarParts VALUES (4, '노블레스', 250.00, 50, '타입');
 INSERT INTO CarParts VALUES (5, '시그니처', 300.00, 40, '타입');
