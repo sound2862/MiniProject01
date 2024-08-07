@@ -1,0 +1,20 @@
+CREATE TABLE CarParts (
+    PartID number PRIMARY KEY,     -- 부품 ID (자동 증가)
+    PartName VARCHAR(255) NOT NULL,            -- 부품 이름
+    Price DECIMAL(10, 2),                      -- 가격 (소수점 2자리까지)
+    Quantity number,                         -- 재고 수량
+    Category VARCHAR(255)                      -- 부품 카테고리 (예: 엔진, 브레이크, 전기, 등)
+);
+
+drop table carparts;
+select * from carparts;
+
+INSERT INTO CarParts VALUES (1, 'A엔진', 1200.00, 10, '엔진');
+INSERT INTO CarParts VALUES (2, 'B엔진', 1400.00, 8, '엔진');
+INSERT INTO CarParts VALUES (3, 'A타이어', 200.00, 50, '타이어');
+INSERT INTO CarParts VALUES (4, 'B타이어', 250.00, 40, '타이어');
+INSERT INTO CarParts VALUES (5, 'A차체', 3000.00, 5, '차체');
+INSERT INTO CarParts VALUES (6, 'B차체', 3200.00, 3, '차체');
+INSERT INTO CarParts VALUES (7, 'A컬러', 100.00, 100, '컬러');
+INSERT INTO CarParts VALUES (8, 'B컬러', 150.00, 80, '컬러');
+
