@@ -1,3 +1,4 @@
+﻿using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -44,25 +45,36 @@ namespace MiniProjectBuycar
             string selectOption = comboBox1.SelectedItem?.ToString() ?? "옵신 미선택";
             string optionDetail = textBox1.Text;
             //파일 경로
-            string filePath = @"C:\Temp\OrderPageData.txt";
+            string connectionString = "Data Source=(DESCRIPTION=" +
+                "(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)" +
+                "(HOST=localhost)(PORT=1521)))" +
+                "(CONNECT_DATA=(SERVER=DEDICATED)" +
+                "(SERVICE_NAME=xe)));" +
+                "User Id=SCOTT;Password=TIGER;";
             //데이터 저장 코드
             try
             {
-                using (StreamWriter writer = new StreamWriter(filePath, true))
+                using (OracleConnection conn = new OracleConnection(connectionString))
                 {
-                    writer.WriteLine("선택된 옵션 " + selectOption);
-                    writer.WriteLine("선택된 옵션의 사양 " + optionDetail);
-                       
+                    conn.Open();
+
+                    string query = "INSERT INTO Customer (Options) VALUES (:options)";
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("options", selectOption));
+                        MessageBox.Show("옵션 선택이 완료되었습니다.", "저장 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
-                MessageBox.Show("주문 정보가 저장 되었습니다.","저장 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch(Exception ex) 
+
+            catch (Exception ex)
             {
                 MessageBox.Show("선택된 주문 정보 저장 중 오류가 발생했습니다" + ex.Message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-
+        }
             
         }
     }
-}
+
