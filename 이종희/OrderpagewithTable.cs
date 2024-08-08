@@ -1,9 +1,11 @@
 using Oracle.ManagedDataAccess.Client;
-
+using Oracle.ManagedDataAccess.Types;
+using System.Data;
 namespace MiniProjectBuycar
 {
     public partial class OrderPage : Form
     {
+        public int NewCustomerID { get; private set; }
         public OrderPage()
         {
             InitializeComponent();
@@ -15,8 +17,8 @@ namespace MiniProjectBuycar
             comboBox1.SelectedIndexChanged += new EventHandler(comboBox1_SelectedIndexChanged);
             comboBox2.SelectedIndexChanged += new EventHandler(comboBox2_SelectedIndexChanged);
             comboBox3.SelectedIndexChanged += new EventHandler(comboBox3_SelectedIndexChanged);
+            Orderbutton.Click += new EventHandler(Orderbutton_Click); // 이벤트 핸들러 등록
         }
-
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             // comboBox2의 항목을 초기화
@@ -38,7 +40,6 @@ namespace MiniProjectBuycar
                 comboBox2.Items.Add("3.5 LPi");
             }
         }
-
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             // combobox2의 항목에 따라 comboBox3의 항목 설정
@@ -47,7 +48,6 @@ namespace MiniProjectBuycar
             comboBox3.Items.Add("흰색");
             comboBox3.Items.Add("회색");
         }
-
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
             // comboBox1과 comboBox3의 선택된 항목을 가져옴
@@ -104,17 +104,7 @@ namespace MiniProjectBuycar
                 pictureBox1.Image = Image.FromFile(imagePath);
             }
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-        } // Form1_Load end
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void Orderbutton_Click(object sender, EventArgs e)
         {
             // 선택된 모델, 엔진, 색상 가져오기
             string selectedModel = comboBox1.SelectedItem?.ToString() ?? "모델 미선택";
@@ -135,14 +125,15 @@ namespace MiniProjectBuycar
                 {
                     conn.Open();
 
-                    string query = "INSERT INTO Customer (Model, Engine, Color) VALUES (:model, :engine, :color )";
-                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    string insertQuery = "INSERT INTO Customer (CustomerID, Model, Engine, Color) VALUES (SEQ_CUSTOMERID.NEXTVAL, :model, :engine, :color) ";
+                    using (OracleCommand insertCmd = new OracleCommand(insertQuery, conn))
                     {
-                        cmd.Parameters.Add(new OracleParameter("model", selectedModel));
-                        cmd.Parameters.Add(new OracleParameter("engine", selectedEngine));
-                        cmd.Parameters.Add(new OracleParameter("color", selectedColor));
-
-                        cmd.ExecuteNonQuery();
+                        insertCmd.Parameters.Add(new OracleParameter("model", selectedModel));
+                        insertCmd.Parameters.Add(new OracleParameter("engine", selectedEngine));
+                        insertCmd.Parameters.Add(new OracleParameter("color", selectedColor));
+                        
+                        insertCmd.ExecuteNonQuery();
+                        MessageBox.Show("차량 정보 저장이 완료되었습니다. 고객 ID: " + NewCustomerID, "저장 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }
@@ -150,11 +141,9 @@ namespace MiniProjectBuycar
             {
                 MessageBox.Show("데이터를 저장하는 동안 오류가 발생했습니다: " + ex.Message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            // AddOption 폼 인스턴스 생성 및 데이터 전달
-            AddOption addOptionForm = new AddOption();
-            addOptionForm.ShowDialog();
+            AddOption addOption = new AddOption();
+            addOption.ShowDialog();
         }
 
-    } // Form1:Form
+    }//orderpage:form END
 }
