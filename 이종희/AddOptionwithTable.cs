@@ -53,7 +53,7 @@ namespace MiniProjectBuycar
                 "(SERVICE_NAME=xe)));" +
                 "User Id=SCOTT;Password=TIGER;";
 
-            // 데이터 저장 코드
+            // 데이터 저장 코드    
             try
             {
                 using (OracleConnection conn = new OracleConnection(connectionString))
