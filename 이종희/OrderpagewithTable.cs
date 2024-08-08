@@ -125,7 +125,7 @@ namespace MiniProjectBuycar
                 {
                     conn.Open();
 
-                    string insertQuery = "INSERT INTO Customer (CustomerID, Model, Engine, Color) VALUES (SEQ_CUSTOMERID.NEXTVAL, :model, :engine, :color) ";
+                    string insertQuery = "INSERT INTO Customer (CustomerID, Model, Engine, Color) VALUES (SEQ_CUSTOMERID.NEXTVAL, :model, :engine, :color)";
                     using (OracleCommand insertCmd = new OracleCommand(insertQuery, conn))
                     {
                         insertCmd.Parameters.Add(new OracleParameter("model", selectedModel));
@@ -134,16 +134,18 @@ namespace MiniProjectBuycar
                         
                         insertCmd.ExecuteNonQuery();
                         MessageBox.Show("차량 정보 저장이 완료되었습니다. 고객 ID: " + NewCustomerID, "저장 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    
                     }
                 }
+                AddOption addOption = new AddOption();
+                addOption.ShowDialog();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("데이터를 저장하는 동안 오류가 발생했습니다: " + ex.Message, "오류", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            AddOption addOption = new AddOption();
-            addOption.ShowDialog();
+            
         }
-
+        
     }//orderpage:form END
 }
