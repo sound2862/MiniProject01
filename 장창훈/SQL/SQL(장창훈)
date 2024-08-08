@@ -1,0 +1,94 @@
+drop table MaterialTable;
+drop table PressTable;
+drop table WeldTable;
+drop table PaintTable;
+drop table LoginTable;
+drop SEQUENCE LoginTable_seq;
+--------------------------------------------------------------------------
+CREATE TABLE MaterialTable (
+    id number PRIMARY KEY,
+    material_name VARCHAR(50) NOT NULL,
+    quantity number NOT NULL,
+    price number
+);
+
+INSERT INTO MaterialTable VALUES (1, '철판', 100, 0);
+INSERT INTO MaterialTable VALUES (2, '악세사리A', 50, 9991);
+INSERT INTO MaterialTable VALUES (3 ,'악세사리B', 50, 9992);
+INSERT INTO MaterialTable VALUES (4, '악세사리C', 50, 9993);
+------------------------------------------------------------------------------
+CREATE TABLE PressTable (
+    id number PRIMARY KEY,
+    part_name VARCHAR(50) NOT NULL,
+    material_id number,
+    quantity number NOT NULL,
+    FOREIGN KEY (material_id) REFERENCES MaterialTable(id)
+);
+
+INSERT INTO PressTable VALUES (1, 'K3문', 1, 100);
+INSERT INTO PressTable VALUES (2, 'K3프레임', 1, 100);
+INSERT INTO PressTable VALUES (3, 'K5문', 1, 100);
+INSERT INTO PressTable VALUES (4, 'K5프레임', 1, 100);
+INSERT INTO PressTable VALUES (5, 'K8문', 1, 100);
+INSERT INTO PressTable VALUES (6, 'K8프레임', 1, 100);
+------------------------------------------------------------------------------
+CREATE TABLE WeldTable (
+    id number PRIMARY KEY,
+    body_name VARCHAR(50) NOT NULL,
+    Press_Table1_id INT,
+    Press_Table2_id INT,
+    quantity number NOT NULL,
+    price number,
+    FOREIGN KEY (Press_Table1_id) REFERENCES PressTable(id),
+    FOREIGN KEY (Press_Table2_id) REFERENCES PressTable(id)
+);
+
+INSERT INTO WeldTable VALUES (1,'K3', 1, 2, 100, 999999991);
+INSERT INTO WeldTable VALUES (2,'K5', 3, 4, 100, 999999992);
+INSERT INTO WeldTable VALUES (3,'K8', 5, 6, 100, 999999993);
+-----------------------------------------------------------------------------
+CREATE TABLE PaintTable (
+    id number PRIMARY KEY,
+    Weld_Table_id INT,
+    color VARCHAR(20) NOT NULL,
+    quantity number NOT NULL,
+    FOREIGN KEY (Weld_Table_id) REFERENCES WeldTable(id)
+);
+
+INSERT INTO PaintTable VALUES (1, 1, '회색', 100);
+INSERT INTO PaintTable VALUES (2, 1, '흰색', 100);
+INSERT INTO PaintTable VALUES (3, 1, '검정', 100);
+INSERT INTO PaintTable VALUES (4, 2, '회색', 100);
+INSERT INTO PaintTable VALUES (5, 2, '흰색', 100);
+INSERT INTO PaintTable VALUES (6, 2, '검정', 100);
+INSERT INTO PaintTable VALUES (7, 3, '회색', 100);
+INSERT INTO PaintTable VALUES (8, 3, '흰색', 100);
+INSERT INTO PaintTable VALUES (9, 3, '검정', 100);
+----------------------------------------------------------------------
+CREATE SEQUENCE LoginTable_seq
+   START WITH 3
+   INCREMENT BY 1
+   NOCACHE
+   NOCYCLE;
+
+CREATE TABLE LoginTable (
+    id number PRIMARY KEY,
+    User_name varchar2(20) not null,
+    User_id varchar2(100) not null,
+    User_pwd varchar2(100) not null,
+    admin NUMBER(1),
+    Birthday CHAR(6) NOT NULL CONSTRAINT check_birthday_six CHECK (REGEXP_LIKE(Birthday, '^[0-9]{6}$'))
+);
+INSERT INTO LoginTable VALUES (1, '관리자', 'admin', 'admin', 1, '000001');
+INSERT INTO LoginTable VALUES (2, '아무개', 'user', 'user', 0, '000002');
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '냥냥냥', 'user2', 'user2', 0, '000003');
+
+commit;
+----------------------------------------------------------------------
+
+select * from MaterialTable;
+select * from PressTable;
+select * from WeldTable;
+select * from PaintTable;
+select * from LoginTable;
+
