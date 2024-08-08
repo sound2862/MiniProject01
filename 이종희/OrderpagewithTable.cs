@@ -17,7 +17,6 @@ namespace MiniProjectBuycar
             comboBox1.SelectedIndexChanged += new EventHandler(comboBox1_SelectedIndexChanged);
             comboBox2.SelectedIndexChanged += new EventHandler(comboBox2_SelectedIndexChanged);
             comboBox3.SelectedIndexChanged += new EventHandler(comboBox3_SelectedIndexChanged);
-            Orderbutton.Click += new EventHandler(Orderbutton_Click); // 이벤트 핸들러 등록
         }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -131,14 +130,14 @@ namespace MiniProjectBuycar
                         insertCmd.Parameters.Add(new OracleParameter("model", selectedModel));
                         insertCmd.Parameters.Add(new OracleParameter("engine", selectedEngine));
                         insertCmd.Parameters.Add(new OracleParameter("color", selectedColor));
-                        
-                        insertCmd.ExecuteNonQuery();
                         MessageBox.Show("차량 정보 저장이 완료되었습니다. 고객 ID: " + NewCustomerID, "저장 완료", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        insertCmd.ExecuteNonQuery();
                     
                     }
+                    AddOption addOption = new AddOption();
+                    addOption.ShowDialog();
+                    conn.Close();
                 }
-                AddOption addOption = new AddOption();
-                addOption.ShowDialog();
             }
             catch (Exception ex)
             {
