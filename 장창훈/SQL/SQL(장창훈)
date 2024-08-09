@@ -4,6 +4,10 @@ drop table WeldTable;
 drop table PaintTable;
 drop table LoginTable;
 drop SEQUENCE LoginTable_seq;
+drop table customer;
+drop table CustomerTemp;
+drop SEQUENCE SEQ_CUSTOMERID;
+DROP TABLE CarPrice;
 --------------------------------------------------------------------------
 CREATE TABLE MaterialTable (
     id number PRIMARY KEY,
@@ -77,13 +81,64 @@ CREATE TABLE LoginTable (
     User_id varchar2(100) not null,
     User_pwd varchar2(100) not null,
     admin NUMBER(1),
-    Birthday CHAR(6) NOT NULL CONSTRAINT check_birthday_six CHECK (REGEXP_LIKE(Birthday, '^[0-9]{6}$'))
+    Birthday CHAR(6) NOT NULL CONSTRAINT check_birthday_six CHECK (REGEXP_LIKE(Birthday, '^[0-9]{6}$')),
+    Now_Login number(1)
 );
-INSERT INTO LoginTable VALUES (1, '관리자', 'admin', 'admin', 1, '000001');
-INSERT INTO LoginTable VALUES (2, '아무개', 'user', 'user', 0, '000002');
-INSERT INTO LoginTable VALUES (logintable_seq.nextval, '냥냥냥', 'user2', 'user2', 0, '000003');
+INSERT INTO LoginTable VALUES (1, '관리자', 'admin', 'admin', 1, '000001',0);
+INSERT INTO LoginTable VALUES (2, '아무개', 'user', 'user', 0, '000002',0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '냥냥냥', 'user2', 'user2', 0, '000003',0);
 
-commit;
+----------------------------------------------------------------------
+CREATE TABLE Customer(
+	CustomerID NUMBER(5) PRIMARY KEY,
+	Model VARCHAR2(20) ,
+	Engine VARCHAR2(20) ,
+	Color VARCHAR2(20) ,
+	Options VARCHAR2(20),
+    Id number,
+    OrderDay date
+);
+
+INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (200,'차종a', '엔진a', '색깔a', '옵션', 1, SYSDATE);
+
+-------------------------------------------------------------------
+CREATE TABLE CustomerTemp(
+	Model VARCHAR2(20) ,
+	Engine VARCHAR2(20) ,
+	Color VARCHAR2(20) ,
+	Options VARCHAR2(20)
+);
+-------------------------------------------------------------------
+CREATE SEQUENCE SEQ_CUSTOMERID
+START WITH 1
+INCREMENT BY 1
+NOCACHE;
+--------------------------------------------------------------------
+CREATE TABLE CarPrice(
+CARMODEL VARCHAR2(50),
+Carengine VARCHAR2(100),
+caroptions VARCHAR2(100),
+price VARCHAR2(50)
+);
+
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K3', '1.6 가솔린', '스탠다드', '18,250,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K3', '1.6 가솔린', '노블레스', '21,510,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K3', '1.6 가솔린', '시그니처', '25,070,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K5', '2.0 가솔린', '스탠다드', '27,840,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K5', '2.0 가솔린', '노블레스', '31,350,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K5', '2.0 가솔린', '시그니처', '34,470,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K5', '2.0 LPi', '스탠다드', '28,530,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K5', '2.0 LPi', '노블레스', '32,140,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K5', '2.0 LPi', '시그니처', '34,620,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 가솔린', '스탠다드', '36,990,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 가솔린', '노블레스', '39,660,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 가솔린', '시그니처', '42,980,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 LPi ', '스탠다드', '32,990,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 LPi ', '노블레스', '37,510,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 LPi ', '시그니처', '45,370,000');
+--------------------------------------------------------------------
+UPDATE LoginTable SET NOW_LOGIN = 0;
+COMMIT;
 ----------------------------------------------------------------------
 
 select * from MaterialTable;
@@ -91,4 +146,15 @@ select * from PressTable;
 select * from WeldTable;
 select * from PaintTable;
 select * from LoginTable;
+select * from CustomerTemp;
+select * from CarPrice;
+select * from Customer;
+
+SELECT Price 
+FROM CarPrice
+where CARMODEL = (SELECT model FROM CustomerTemp)
+and Carengine = (SELECT engine FROM CustomerTemp) 
+and caroptions = (SELECT Options FROM CustomerTemp);
+
+
 
