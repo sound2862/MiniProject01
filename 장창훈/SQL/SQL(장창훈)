@@ -95,11 +95,12 @@ CREATE TABLE Customer(
 	Engine VARCHAR2(20) ,
 	Color VARCHAR2(20) ,
 	Options VARCHAR2(20),
-    Id number,
+    UserId number,
+    UserName VARCHAR2(20),
     OrderDay date
 );
 
-INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (200,'차종a', '엔진a', '색깔a', '옵션', 1, SYSDATE);
+INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (200,'차종a', '엔진a', '색깔a', '옵션', 1,'먀먀먀', SYSDATE);
 
 -------------------------------------------------------------------
 CREATE TABLE CustomerTemp(
@@ -133,9 +134,9 @@ INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K5', '2.0
 INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 가솔린', '스탠다드', '36,990,000');
 INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 가솔린', '노블레스', '39,660,000');
 INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 가솔린', '시그니처', '42,980,000');
-INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 LPi ', '스탠다드', '32,990,000');
-INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 LPi ', '노블레스', '37,510,000');
-INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 LPi ', '시그니처', '45,370,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 LPi', '스탠다드', '32,990,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 LPi', '노블레스', '37,510,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 LPi', '시그니처', '45,370,000');
 --------------------------------------------------------------------
 UPDATE LoginTable SET NOW_LOGIN = 0;
 COMMIT;
@@ -155,6 +156,5 @@ FROM CarPrice
 where CARMODEL = (SELECT model FROM CustomerTemp)
 and Carengine = (SELECT engine FROM CustomerTemp) 
 and caroptions = (SELECT Options FROM CustomerTemp);
-
 
 
