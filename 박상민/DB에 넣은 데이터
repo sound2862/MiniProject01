@@ -1,0 +1,207 @@
+drop table MaterialTable;
+drop table PressTable;
+drop table WeldTable;
+drop table PaintTable;
+drop table LoginTable;
+drop SEQUENCE LoginTable_seq;
+drop table customer;
+drop table CustomerTemp;
+drop SEQUENCE SEQ_CUSTOMERID;
+DROP TABLE CarPrice;
+--------------------------------------------------------------------------
+CREATE TABLE MaterialTable (
+    id number PRIMARY KEY,
+    material_name VARCHAR(50) NOT NULL,
+    quantity number NOT NULL,
+    price number
+);
+
+INSERT INTO MaterialTable VALUES (1, '철판', 100, 0);
+INSERT INTO MaterialTable VALUES (2, '악세사리A', 50, 9991);
+INSERT INTO MaterialTable VALUES (3 ,'악세사리B', 50, 9992);
+INSERT INTO MaterialTable VALUES (4, '악세사리C', 50, 9993);
+------------------------------------------------------------------------------
+CREATE TABLE PressTable (
+    id number PRIMARY KEY,
+    part_name VARCHAR(50) NOT NULL,
+    material_id number,
+    quantity number NOT NULL,
+    FOREIGN KEY (material_id) REFERENCES MaterialTable(id)
+);
+
+INSERT INTO PressTable VALUES (1, 'K3문', 1, 100);
+INSERT INTO PressTable VALUES (2, 'K3프레임', 1, 100);
+INSERT INTO PressTable VALUES (3, 'K5문', 1, 100);
+INSERT INTO PressTable VALUES (4, 'K5프레임', 1, 100);
+INSERT INTO PressTable VALUES (5, 'K8문', 1, 100);
+INSERT INTO PressTable VALUES (6, 'K8프레임', 1, 100);
+------------------------------------------------------------------------------
+CREATE TABLE WeldTable (
+    id number PRIMARY KEY,
+    body_name VARCHAR(50) NOT NULL,
+    Press_Table1_id INT,
+    Press_Table2_id INT,
+    quantity number NOT NULL,
+    price number,
+    FOREIGN KEY (Press_Table1_id) REFERENCES PressTable(id),
+    FOREIGN KEY (Press_Table2_id) REFERENCES PressTable(id)
+);
+
+INSERT INTO WeldTable VALUES (1,'K3', 1, 2, 100, 999999991);
+INSERT INTO WeldTable VALUES (2,'K5', 3, 4, 100, 999999992);
+INSERT INTO WeldTable VALUES (3,'K8', 5, 6, 100, 999999993);
+-----------------------------------------------------------------------------
+CREATE TABLE PaintTable (
+    id number PRIMARY KEY,
+    Weld_Table_id INT,
+    color VARCHAR(20) NOT NULL,
+    quantity number NOT NULL,
+    FOREIGN KEY (Weld_Table_id) REFERENCES WeldTable(id)
+);
+
+INSERT INTO PaintTable VALUES (1, 1, '회색', 100);
+INSERT INTO PaintTable VALUES (2, 1, '흰색', 100);
+INSERT INTO PaintTable VALUES (3, 1, '검정', 100);
+INSERT INTO PaintTable VALUES (4, 2, '회색', 100);
+INSERT INTO PaintTable VALUES (5, 2, '흰색', 100);
+INSERT INTO PaintTable VALUES (6, 2, '검정', 100);
+INSERT INTO PaintTable VALUES (7, 3, '회색', 100);
+INSERT INTO PaintTable VALUES (8, 3, '흰색', 100);
+INSERT INTO PaintTable VALUES (9, 3, '검정', 100);
+----------------------------------------------------------------------
+CREATE SEQUENCE LoginTable_seq
+   START WITH 3
+   INCREMENT BY 1
+   NOCACHE
+   NOCYCLE;
+
+CREATE TABLE LoginTable (
+    id number PRIMARY KEY,
+    User_name varchar2(20) not null,
+    User_id varchar2(100) not null,
+    User_pwd varchar2(100) not null,
+    admin NUMBER(1),
+    Birthday CHAR(6) NOT NULL CONSTRAINT check_birthday_six CHECK (REGEXP_LIKE(Birthday, '^[0-9]{6}$')),
+    Now_Login number(1)
+);
+INSERT INTO LoginTable VALUES (1, '관리자', 'admin', 'admin', 1, '000001',0);
+INSERT INTO LoginTable VALUES (2, '아무개', 'user', 'user', 0, '000002',0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '냥냥냥', 'user', 'user', 0, '000003',0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '김철수', 'user1', 'user', 0, '920101', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '박영희', 'user2', 'user', 0, '930203', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '이민호', 'user3', 'user', 0, '940415', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '최유리', 'user4', 'user', 0, '950527', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '정지훈', 'user5', 'user', 0, '960630', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '한예슬', 'user6', 'user', 0, '970115', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '김하늘', 'user7', 'user', 0, '981220', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '박보영', 'user8', 'user', 0, '990405', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '이종석', 'user9', 'user', 0, '000112', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '유승호', 'user10', 'user', 0, '010317', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '노무현', 'user11', 'user', 0, '970223', 0);
+
+-- 30~40대 (주민번호 앞자리: 80~89)
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '강호동', 'user11', 'user', 0, '810101', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '유재석', 'user12', 'user', 0, '820203', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '김구라', 'user13', 'user', 0, '830415', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '이경규', 'user14', 'user', 0, '840527', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '박명수', 'user15', 'user', 0, '850630', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '정준하', 'user16', 'user', 0, '860715', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '정형돈', 'user17', 'user', 0, '870920', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '하하', 'user18', 'user', 0, '880110', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '노홍철', 'user19', 'user', 0, '891220', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '길', 'user20', 'user', 0, '890405', 0);
+
+-- 50대 이상 (주민번호 앞자리: 60~79)
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '이순신', 'user21', 'user', 0, '700101', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '홍길동', 'user22', 'user', 0, '650203', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '박정희', 'user23', 'user', 0, '601015', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '윤봉길', 'user24', 'user', 0, '750527', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '김대중', 'user25', 'user', 0, '761130', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '김구', 'user26', 'user', 0, '690120', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '유관순', 'user27', 'user', 0, '701220', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '안중근', 'user28', 'user', 0, '740405', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '손기정', 'user29', 'user', 0, '631210', 0);
+INSERT INTO LoginTable VALUES (logintable_seq.nextval, '김홍도', 'user30', 'user', 0, '781225', 0);
+----------------------------------------------------------------------
+CREATE TABLE Customer(
+	CustomerID NUMBER(5) PRIMARY KEY,
+	Model VARCHAR2(20) ,
+	Engine VARCHAR2(20) ,
+	Color VARCHAR2(20) ,
+	Options VARCHAR2(20),
+    Id number,
+    OrderDay date
+);
+
+INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (200,'K3', '1.6 가솔린', '흰색', '스탠다드', 1, SYSDATE);
+INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (201,'K3', '2.0 LPi', '흰색', '노블레스', 2, SYSDATE);
+INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (202,'K3', '3.5 가솔린', '검정', '노블레스', 3, SYSDATE);
+INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (203,'K3', '2.0 LPi', '회색', '시그니처', 3, SYSDATE);
+INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (204,'K5', '3.5 LPi', '회색', '노블레스', 3, SYSDATE);
+INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (205,'K5', '1.6 가솔린', '검정', '노블레스', 2, SYSDATE);
+INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (206,'K5', '3.5 가솔린', '검정', '시그니처', 1, SYSDATE);
+INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (207,'K5', '3.5 가솔린', '흰색', '시그니처', 1, SYSDATE);
+INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (208,'K8', '2.0 가솔린', '검정', '시그니처', 2, SYSDATE);
+INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (209,'K8', '3.5 가솔린', '검정', '시그니처', 1, SYSDATE);
+INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (210,'K8', '1.6 가솔린', '회색', '노블레스', 2, SYSDATE);
+INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (211,'K8', '3.5 LPi', '흰색', '스탠다드', 2, SYSDATE);
+INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (212,'K3', '2.0 LPi', '검정', '노블레스', 1, SYSDATE);
+INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (213,'K5', '2.0 가솔린', '회색', '스탠다드', 1, SYSDATE);
+INSERT INTO Customer (CustomerID,Model,Engine,Color,Options,Id,OrderDay) VALUES (214,'K8', '3.5 가솔린', '검정', '노블레스', 1, SYSDATE);
+
+-------------------------------------------------------------------
+CREATE TABLE CustomerTemp(
+	Model VARCHAR2(20) ,
+	Engine VARCHAR2(20) ,
+	Color VARCHAR2(20) ,
+	Options VARCHAR2(20)
+);
+-------------------------------------------------------------------
+CREATE SEQUENCE SEQ_CUSTOMERID
+START WITH 1
+INCREMENT BY 1
+NOCACHE;
+--------------------------------------------------------------------
+CREATE TABLE CarPrice(
+CARMODEL VARCHAR2(50),
+Carengine VARCHAR2(100),
+caroptions VARCHAR2(100),
+price VARCHAR2(50)
+);
+
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K3', '1.6 가솔린', '스탠다드', '18,250,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K3', '1.6 가솔린', '노블레스', '21,510,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K3', '1.6 가솔린', '시그니처', '25,070,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K5', '2.0 가솔린', '스탠다드', '27,840,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K5', '2.0 가솔린', '노블레스', '31,350,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K5', '2.0 가솔린', '시그니처', '34,470,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K5', '2.0 LPi', '스탠다드', '28,530,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K5', '2.0 LPi', '노블레스', '32,140,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K5', '2.0 LPi', '시그니처', '34,620,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 가솔린', '스탠다드', '36,990,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 가솔린', '노블레스', '39,660,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 가솔린', '시그니처', '42,980,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 LPi', '스탠다드', '32,990,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 LPi', '노블레스', '37,510,000');
+INSERT INTO CarPrice (CARMODEL, Carengine, caroptions, price) VALUES ('K8', '3.5 LPi', '시그니처', '45,370,000');
+--------------------------------------------------------------------
+UPDATE LoginTable SET NOW_LOGIN = 0;
+COMMIT;
+----------------------------------------------------------------------
+
+select * from MaterialTable;
+select * from PressTable;
+select * from WeldTable;
+select * from PaintTable;
+select * from LoginTable;
+select * from CustomerTemp;
+select * from CarPrice;
+select * from Customer;
+
+
+SELECT Price 
+FROM CarPrice
+where CARMODEL = (SELECT model FROM CustomerTemp)
+and Carengine = (SELECT engine FROM CustomerTemp) 
+and caroptions = (SELECT Options FROM CustomerTemp);
+
